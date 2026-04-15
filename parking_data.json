@@ -1,0 +1,1094 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "admin123"
+  },
+  "areas": {
+    "Hitech City - Cyber Towers": {
+      "id": "hitech_cyber",
+      "zone": "Hitech City",
+      "lat": 17.4474,
+      "lng": 78.3762,
+      "address": "Cyber Towers, Hitech City, Hyderabad",
+      "total_slots": 10,
+      "slots": {
+        "HC01": {
+          "occupied": true,
+          "booking": {
+            "booking_id": "BKHC011234",
+            "name": "Arjun Sharma",
+            "vehicle_number": "TS09AB1234",
+            "area": "Hitech City - Cyber Towers",
+            "slot": "HC01",
+            "time": "2024-01-15 09:00",
+            "phone": ""
+          }
+        },
+        "HC02": {
+          "occupied": false,
+          "booking": null
+        },
+        "HC03": {
+          "occupied": true,
+          "booking": {
+            "booking_id": "BKHC035678",
+            "name": "Priya Reddy",
+            "vehicle_number": "TS07CD5678",
+            "area": "Hitech City - Cyber Towers",
+            "slot": "HC03",
+            "time": "2024-01-15 10:30",
+            "phone": ""
+          }
+        },
+        "HC04": {
+          "occupied": false,
+          "booking": null
+        },
+        "HC05": {
+          "occupied": false,
+          "booking": null
+        },
+        "HC06": {
+          "occupied": false,
+          "booking": null
+        },
+        "HC07": {
+          "occupied": false,
+          "booking": null
+        },
+        "HC08": {
+          "occupied": false,
+          "booking": null
+        },
+        "HC09": {
+          "occupied": false,
+          "booking": null
+        },
+        "HC10": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Hitech City - HITEC Hub": {
+      "id": "hitech_hub",
+      "zone": "Hitech City",
+      "lat": 17.4493,
+      "lng": 78.3801,
+      "address": "HITEC Hub, Madhapur, Hyderabad",
+      "total_slots": 8,
+      "slots": {
+        "HH01": {
+          "occupied": false,
+          "booking": null
+        },
+        "HH02": {
+          "occupied": false,
+          "booking": null
+        },
+        "HH03": {
+          "occupied": true,
+          "booking": {
+            "booking_id": "BKHH038888",
+            "name": "ravi",
+            "vehicle_number": "TS03AA8888",
+            "area": "Hitech City - HITEC Hub",
+            "slot": "HH03",
+            "time": "2026-03-31 07:19",
+            "phone": ""
+          }
+        },
+        "HH04": {
+          "occupied": false,
+          "booking": null
+        },
+        "HH05": {
+          "occupied": false,
+          "booking": null
+        },
+        "HH06": {
+          "occupied": false,
+          "booking": null
+        },
+        "HH07": {
+          "occupied": false,
+          "booking": null
+        },
+        "HH08": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Hitech City - Mindspace": {
+      "id": "hitech_mindspace",
+      "zone": "Hitech City",
+      "lat": 17.4436,
+      "lng": 78.3799,
+      "address": "Mindspace IT Park, Hitech City, Hyderabad",
+      "total_slots": 10,
+      "slots": {
+        "HM01": {
+          "occupied": false,
+          "booking": null
+        },
+        "HM02": {
+          "occupied": false,
+          "booking": null
+        },
+        "HM03": {
+          "occupied": false,
+          "booking": null
+        },
+        "HM04": {
+          "occupied": false,
+          "booking": null
+        },
+        "HM05": {
+          "occupied": false,
+          "booking": null
+        },
+        "HM06": {
+          "occupied": false,
+          "booking": null
+        },
+        "HM07": {
+          "occupied": false,
+          "booking": null
+        },
+        "HM08": {
+          "occupied": false,
+          "booking": null
+        },
+        "HM09": {
+          "occupied": false,
+          "booking": null
+        },
+        "HM10": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Banjara Hills - Road No. 12": {
+      "id": "banjara_rd12",
+      "zone": "Banjara Hills",
+      "lat": 17.4156,
+      "lng": 78.4347,
+      "address": "Road No. 12, Banjara Hills, Hyderabad",
+      "total_slots": 12,
+      "slots": {
+        "BR01": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR02": {
+          "occupied": true,
+          "booking": {
+            "booking_id": "BKBR029012",
+            "name": "Rahul Kumar",
+            "vehicle_number": "AP11EF9012",
+            "area": "Banjara Hills - Road No. 12",
+            "slot": "BR02",
+            "time": "2024-01-15 08:15",
+            "phone": ""
+          }
+        },
+        "BR03": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR04": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR05": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR06": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR07": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR08": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR09": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR10": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR11": {
+          "occupied": false,
+          "booking": null
+        },
+        "BR12": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Banjara Hills - Peddamma Temple": {
+      "id": "banjara_temple",
+      "zone": "Banjara Hills",
+      "lat": 17.4263,
+      "lng": 78.4108,
+      "address": "Peddamma Temple Rd, Banjara Hills, Hyderabad",
+      "total_slots": 8,
+      "slots": {
+        "BT01": {
+          "occupied": false,
+          "booking": null
+        },
+        "BT02": {
+          "occupied": false,
+          "booking": null
+        },
+        "BT03": {
+          "occupied": false,
+          "booking": null
+        },
+        "BT04": {
+          "occupied": false,
+          "booking": null
+        },
+        "BT05": {
+          "occupied": false,
+          "booking": null
+        },
+        "BT06": {
+          "occupied": false,
+          "booking": null
+        },
+        "BT07": {
+          "occupied": false,
+          "booking": null
+        },
+        "BT08": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Banjara Hills - GVK One Mall": {
+      "id": "banjara_gvk",
+      "zone": "Banjara Hills",
+      "lat": 17.4122,
+      "lng": 78.4476,
+      "address": "GVK One Mall, Banjara Hills, Hyderabad",
+      "total_slots": 10,
+      "slots": {
+        "BG01": {
+          "occupied": false,
+          "booking": null
+        },
+        "BG02": {
+          "occupied": false,
+          "booking": null
+        },
+        "BG03": {
+          "occupied": false,
+          "booking": null
+        },
+        "BG04": {
+          "occupied": false,
+          "booking": null
+        },
+        "BG05": {
+          "occupied": false,
+          "booking": null
+        },
+        "BG06": {
+          "occupied": false,
+          "booking": null
+        },
+        "BG07": {
+          "occupied": false,
+          "booking": null
+        },
+        "BG08": {
+          "occupied": false,
+          "booking": null
+        },
+        "BG09": {
+          "occupied": false,
+          "booking": null
+        },
+        "BG10": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Secunderabad - Paradise Circle": {
+      "id": "secu_paradise",
+      "zone": "Secunderabad",
+      "lat": 17.4399,
+      "lng": 78.4983,
+      "address": "Paradise Circle, Secunderabad, Hyderabad",
+      "total_slots": 10,
+      "slots": {
+        "SP01": {
+          "occupied": true,
+          "booking": {
+            "booking_id": "BKSP011234",
+            "name": "hasini",
+            "vehicle_number": "TS03AB1234",
+            "area": "Secunderabad - Paradise Circle",
+            "slot": "SP01",
+            "time": "2026-03-31 09:05",
+            "phone": ""
+          }
+        },
+        "SP02": {
+          "occupied": false,
+          "booking": null
+        },
+        "SP03": {
+          "occupied": false,
+          "booking": null
+        },
+        "SP04": {
+          "occupied": false,
+          "booking": null
+        },
+        "SP05": {
+          "occupied": false,
+          "booking": null
+        },
+        "SP06": {
+          "occupied": false,
+          "booking": null
+        },
+        "SP07": {
+          "occupied": false,
+          "booking": null
+        },
+        "SP08": {
+          "occupied": false,
+          "booking": null
+        },
+        "SP09": {
+          "occupied": true,
+          "booking": {
+            "booking_id": "BKSP091111",
+            "name": "megha",
+            "vehicle_number": "TS03AA1111",
+            "area": "Secunderabad - Paradise Circle",
+            "slot": "SP09",
+            "time": "2026-03-31 13:20",
+            "phone": ""
+          }
+        },
+        "SP10": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Secunderabad - Clock Tower": {
+      "id": "secu_clock",
+      "zone": "Secunderabad",
+      "lat": 17.4368,
+      "lng": 78.5012,
+      "address": "Clock Tower, M.G. Road, Secunderabad, Hyderabad",
+      "total_slots": 8,
+      "slots": {
+        "SC01": {
+          "occupied": false,
+          "booking": null
+        },
+        "SC02": {
+          "occupied": false,
+          "booking": null
+        },
+        "SC03": {
+          "occupied": false,
+          "booking": null
+        },
+        "SC04": {
+          "occupied": false,
+          "booking": null
+        },
+        "SC05": {
+          "occupied": false,
+          "booking": null
+        },
+        "SC06": {
+          "occupied": false,
+          "booking": null
+        },
+        "SC07": {
+          "occupied": false,
+          "booking": null
+        },
+        "SC08": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Secunderabad - SD Road": {
+      "id": "secu_sdroad",
+      "zone": "Secunderabad",
+      "lat": 17.4453,
+      "lng": 78.4967,
+      "address": "S.D. Road, Secunderabad, Hyderabad",
+      "total_slots": 10,
+      "slots": {
+        "SS01": {
+          "occupied": false,
+          "booking": null
+        },
+        "SS02": {
+          "occupied": false,
+          "booking": null
+        },
+        "SS03": {
+          "occupied": false,
+          "booking": null
+        },
+        "SS04": {
+          "occupied": false,
+          "booking": null
+        },
+        "SS05": {
+          "occupied": false,
+          "booking": null
+        },
+        "SS06": {
+          "occupied": false,
+          "booking": null
+        },
+        "SS07": {
+          "occupied": false,
+          "booking": null
+        },
+        "SS08": {
+          "occupied": false,
+          "booking": null
+        },
+        "SS09": {
+          "occupied": false,
+          "booking": null
+        },
+        "SS10": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Secunderabad - Trimulgherry": {
+      "id": "secu_trimul",
+      "zone": "Secunderabad",
+      "lat": 17.463,
+      "lng": 78.514,
+      "address": "Trimulgherry, Secunderabad, Hyderabad",
+      "total_slots": 8,
+      "slots": {
+        "ST01": {
+          "occupied": false,
+          "booking": null
+        },
+        "ST02": {
+          "occupied": false,
+          "booking": null
+        },
+        "ST03": {
+          "occupied": false,
+          "booking": null
+        },
+        "ST04": {
+          "occupied": false,
+          "booking": null
+        },
+        "ST05": {
+          "occupied": false,
+          "booking": null
+        },
+        "ST06": {
+          "occupied": false,
+          "booking": null
+        },
+        "ST07": {
+          "occupied": false,
+          "booking": null
+        },
+        "ST08": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Gachibowli - DLF Cyber City": {
+      "id": "gachi_dlf",
+      "zone": "Gachibowli",
+      "lat": 17.4401,
+      "lng": 78.3489,
+      "address": "DLF Cyber City, Gachibowli, Hyderabad",
+      "total_slots": 10,
+      "slots": {
+        "GD01": {
+          "occupied": false,
+          "booking": null
+        },
+        "GD02": {
+          "occupied": false,
+          "booking": null
+        },
+        "GD03": {
+          "occupied": false,
+          "booking": null
+        },
+        "GD04": {
+          "occupied": false,
+          "booking": null
+        },
+        "GD05": {
+          "occupied": true,
+          "booking": {
+            "booking_id": "BKGD053456",
+            "name": "Sneha Patel",
+            "vehicle_number": "TS01GH3456",
+            "area": "Gachibowli - DLF Cyber City",
+            "slot": "GD05",
+            "time": "2024-01-15 11:00",
+            "phone": ""
+          }
+        },
+        "GD06": {
+          "occupied": false,
+          "booking": null
+        },
+        "GD07": {
+          "occupied": false,
+          "booking": null
+        },
+        "GD08": {
+          "occupied": false,
+          "booking": null
+        },
+        "GD09": {
+          "occupied": false,
+          "booking": null
+        },
+        "GD10": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Gachibowli - University of Hyderabad": {
+      "id": "gachi_uoh",
+      "zone": "Gachibowli",
+      "lat": 17.4572,
+      "lng": 78.3305,
+      "address": "University of Hyderabad Campus, Gachibowli, Hyderabad",
+      "total_slots": 8,
+      "slots": {
+        "GU01": {
+          "occupied": false,
+          "booking": null
+        },
+        "GU02": {
+          "occupied": false,
+          "booking": null
+        },
+        "GU03": {
+          "occupied": false,
+          "booking": null
+        },
+        "GU04": {
+          "occupied": false,
+          "booking": null
+        },
+        "GU05": {
+          "occupied": false,
+          "booking": null
+        },
+        "GU06": {
+          "occupied": false,
+          "booking": null
+        },
+        "GU07": {
+          "occupied": false,
+          "booking": null
+        },
+        "GU08": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Gachibowli - Aparna Sarovar": {
+      "id": "gachi_aparna",
+      "zone": "Gachibowli",
+      "lat": 17.432,
+      "lng": 78.362,
+      "address": "Aparna Sarovar Zone, Nanakramguda, Gachibowli, Hyderabad",
+      "total_slots": 8,
+      "slots": {
+        "GA01": {
+          "occupied": false,
+          "booking": null
+        },
+        "GA02": {
+          "occupied": false,
+          "booking": null
+        },
+        "GA03": {
+          "occupied": false,
+          "booking": null
+        },
+        "GA04": {
+          "occupied": false,
+          "booking": null
+        },
+        "GA05": {
+          "occupied": false,
+          "booking": null
+        },
+        "GA06": {
+          "occupied": false,
+          "booking": null
+        },
+        "GA07": {
+          "occupied": false,
+          "booking": null
+        },
+        "GA08": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Madhapur - Film Nagar": {
+      "id": "madhapur_film",
+      "zone": "Madhapur",
+      "lat": 17.421,
+      "lng": 78.4,
+      "address": "Film Nagar, Madhapur, Hyderabad",
+      "total_slots": 10,
+      "slots": {
+        "MF01": {
+          "occupied": false,
+          "booking": null
+        },
+        "MF02": {
+          "occupied": false,
+          "booking": null
+        },
+        "MF03": {
+          "occupied": false,
+          "booking": null
+        },
+        "MF04": {
+          "occupied": false,
+          "booking": null
+        },
+        "MF05": {
+          "occupied": false,
+          "booking": null
+        },
+        "MF06": {
+          "occupied": false,
+          "booking": null
+        },
+        "MF07": {
+          "occupied": true,
+          "booking": {
+            "booking_id": "BKMF071234",
+            "name": "siri",
+            "vehicle_number": "TS03AA1234",
+            "area": "Madhapur - Film Nagar",
+            "slot": "MF07",
+            "time": "2026-03-31 06:49",
+            "phone": ""
+          }
+        },
+        "MF08": {
+          "occupied": false,
+          "booking": null
+        },
+        "MF09": {
+          "occupied": false,
+          "booking": null
+        },
+        "MF10": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Madhapur - Jubilee Hills Check Post": {
+      "id": "madhapur_jubilee",
+      "zone": "Madhapur",
+      "lat": 17.4323,
+      "lng": 78.4098,
+      "address": "Jubilee Hills Check Post, Madhapur, Hyderabad",
+      "total_slots": 8,
+      "slots": {
+        "MJ01": {
+          "occupied": false,
+          "booking": null
+        },
+        "MJ02": {
+          "occupied": false,
+          "booking": null
+        },
+        "MJ03": {
+          "occupied": false,
+          "booking": null
+        },
+        "MJ04": {
+          "occupied": false,
+          "booking": null
+        },
+        "MJ05": {
+          "occupied": false,
+          "booking": null
+        },
+        "MJ06": {
+          "occupied": false,
+          "booking": null
+        },
+        "MJ07": {
+          "occupied": false,
+          "booking": null
+        },
+        "MJ08": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    },
+    "Madhapur - Inorbit Mall": {
+      "id": "madhapur_inorbit",
+      "zone": "Madhapur",
+      "lat": 17.438,
+      "lng": 78.3844,
+      "address": "Inorbit Mall, Cyberabad, Madhapur, Hyderabad",
+      "total_slots": 10,
+      "slots": {
+        "MI01": {
+          "occupied": false,
+          "booking": null
+        },
+        "MI02": {
+          "occupied": false,
+          "booking": null
+        },
+        "MI03": {
+          "occupied": false,
+          "booking": null
+        },
+        "MI04": {
+          "occupied": false,
+          "booking": null
+        },
+        "MI05": {
+          "occupied": false,
+          "booking": null
+        },
+        "MI06": {
+          "occupied": false,
+          "booking": null
+        },
+        "MI07": {
+          "occupied": false,
+          "booking": null
+        },
+        "MI08": {
+          "occupied": false,
+          "booking": null
+        },
+        "MI09": {
+          "occupied": false,
+          "booking": null
+        },
+        "MI10": {
+          "occupied": false,
+          "booking": null
+        }
+      }
+    }
+  },
+  "bookings": [
+    {
+      "booking_id": "BKHC011234",
+      "name": "Arjun Sharma",
+      "vehicle_number": "TS09AB1234",
+      "area": "Hitech City - Cyber Towers",
+      "slot": "HC01",
+      "time": "2024-01-15 09:00",
+      "phone": ""
+    },
+    {
+      "booking_id": "BKHH038888",
+      "name": "ravi",
+      "vehicle_number": "TS03AA8888",
+      "area": "Hitech City - HITEC Hub",
+      "slot": "HH03",
+      "time": "2026-03-31 07:19",
+      "phone": ""
+    },
+    {
+      "booking_id": "BKMF071234",
+      "name": "siri",
+      "vehicle_number": "TS03AA1234",
+      "area": "Madhapur - Film Nagar",
+      "slot": "MF07",
+      "time": "2026-03-31 06:49",
+      "phone": ""
+    },
+    {
+      "booking_id": "BKSP011234",
+      "name": "hasini",
+      "vehicle_number": "TS03AB1234",
+      "area": "Secunderabad - Paradise Circle",
+      "slot": "SP01",
+      "time": "2026-03-31 09:05",
+      "phone": ""
+    },
+    {
+      "booking_id": "BKSP091111",
+      "name": "megha",
+      "vehicle_number": "TS03AA1111",
+      "area": "Secunderabad - Paradise Circle",
+      "slot": "SP09",
+      "time": "2026-03-31 13:20",
+      "phone": ""
+    },
+    {
+      "booking_id": "BKGD036666",
+      "name": "megha",
+      "vehicle_number": "TS03AA6666",
+      "area": "Gachibowli - DLF Cyber City",
+      "slot": "GD03",
+      "time": "2026-03-31 17:03",
+      "phone": ""
+    }
+  ],
+  "history": [
+    {
+      "booking_id": "BKGD036666",
+      "name": "megha",
+      "vehicle_number": "TS03AA6666",
+      "area": "Gachibowli - DLF Cyber City",
+      "slot": "GD03",
+      "time": "2026-03-31 17:03",
+      "phone": "",
+      "vacated_time": "2026-03-31 17:04"
+    }
+  ],
+  "destinations": {
+    "paradise circle": {
+      "lat": 17.4399,
+      "lng": 78.4983,
+      "label": "Paradise Circle, Secunderabad"
+    },
+    "paradise": {
+      "lat": 17.4399,
+      "lng": 78.4983,
+      "label": "Paradise Circle, Secunderabad"
+    },
+    "clock tower": {
+      "lat": 17.4368,
+      "lng": 78.5012,
+      "label": "Clock Tower, M.G. Road, Secunderabad"
+    },
+    "mg road": {
+      "lat": 17.4368,
+      "lng": 78.5012,
+      "label": "M.G. Road, Secunderabad"
+    },
+    "sd road": {
+      "lat": 17.4453,
+      "lng": 78.4967,
+      "label": "S.D. Road, Secunderabad"
+    },
+    "trimulgherry": {
+      "lat": 17.463,
+      "lng": 78.514,
+      "label": "Trimulgherry, Secunderabad"
+    },
+    "cyber towers": {
+      "lat": 17.4474,
+      "lng": 78.3762,
+      "label": "Cyber Towers, Hitech City"
+    },
+    "hitec hub": {
+      "lat": 17.4493,
+      "lng": 78.3801,
+      "label": "HITEC Hub, Madhapur"
+    },
+    "mindspace": {
+      "lat": 17.4436,
+      "lng": 78.3799,
+      "label": "Mindspace IT Park, Hitech City"
+    },
+    "road no 12": {
+      "lat": 17.4156,
+      "lng": 78.4347,
+      "label": "Road No. 12, Banjara Hills"
+    },
+    "road 12": {
+      "lat": 17.4156,
+      "lng": 78.4347,
+      "label": "Road No. 12, Banjara Hills"
+    },
+    "peddamma temple": {
+      "lat": 17.4263,
+      "lng": 78.4108,
+      "label": "Peddamma Temple, Banjara Hills"
+    },
+    "gvk one": {
+      "lat": 17.4122,
+      "lng": 78.4476,
+      "label": "GVK One Mall, Banjara Hills"
+    },
+    "gvk mall": {
+      "lat": 17.4122,
+      "lng": 78.4476,
+      "label": "GVK One Mall, Banjara Hills"
+    },
+    "dlf cyber city": {
+      "lat": 17.4401,
+      "lng": 78.3489,
+      "label": "DLF Cyber City, Gachibowli"
+    },
+    "dlf": {
+      "lat": 17.4401,
+      "lng": 78.3489,
+      "label": "DLF Cyber City, Gachibowli"
+    },
+    "university of hyderabad": {
+      "lat": 17.4572,
+      "lng": 78.3305,
+      "label": "University of Hyderabad, Gachibowli"
+    },
+    "uoh": {
+      "lat": 17.4572,
+      "lng": 78.3305,
+      "label": "University of Hyderabad, Gachibowli"
+    },
+    "aparna sarovar": {
+      "lat": 17.432,
+      "lng": 78.362,
+      "label": "Aparna Sarovar, Nanakramguda"
+    },
+    "nanakramguda": {
+      "lat": 17.432,
+      "lng": 78.362,
+      "label": "Nanakramguda, Gachibowli"
+    },
+    "film nagar": {
+      "lat": 17.421,
+      "lng": 78.4,
+      "label": "Film Nagar, Madhapur"
+    },
+    "jubilee hills": {
+      "lat": 17.4323,
+      "lng": 78.4098,
+      "label": "Jubilee Hills Check Post"
+    },
+    "inorbit mall": {
+      "lat": 17.438,
+      "lng": 78.3844,
+      "label": "Inorbit Mall, Cyberabad"
+    },
+    "inorbit": {
+      "lat": 17.438,
+      "lng": 78.3844,
+      "label": "Inorbit Mall, Cyberabad"
+    },
+    "hitech city": {
+      "lat": 17.4474,
+      "lng": 78.3762,
+      "label": "Hitech City"
+    },
+    "banjara hills": {
+      "lat": 17.4156,
+      "lng": 78.4347,
+      "label": "Banjara Hills"
+    },
+    "secunderabad": {
+      "lat": 17.4399,
+      "lng": 78.4983,
+      "label": "Secunderabad"
+    },
+    "gachibowli": {
+      "lat": 17.4401,
+      "lng": 78.3489,
+      "label": "Gachibowli"
+    },
+    "madhapur": {
+      "lat": 17.4485,
+      "lng": 78.3908,
+      "label": "Madhapur"
+    },
+    "charminar": {
+      "lat": 17.3616,
+      "lng": 78.4747,
+      "label": "Charminar, Old City"
+    },
+    "hussain sagar": {
+      "lat": 17.4239,
+      "lng": 78.4738,
+      "label": "Hussain Sagar Lake"
+    },
+    "tank bund": {
+      "lat": 17.4239,
+      "lng": 78.4738,
+      "label": "Tank Bund, Hussain Sagar"
+    },
+    "nampally": {
+      "lat": 17.385,
+      "lng": 78.4714,
+      "label": "Nampally, Hyderabad"
+    },
+    "ameerpet": {
+      "lat": 17.4374,
+      "lng": 78.4487,
+      "label": "Ameerpet, Hyderabad"
+    },
+    "kukatpally": {
+      "lat": 17.4849,
+      "lng": 78.4138,
+      "label": "Kukatpally, Hyderabad"
+    },
+    "dilsukhnagar": {
+      "lat": 17.3686,
+      "lng": 78.5247,
+      "label": "Dilsukhnagar, Hyderabad"
+    },
+    "lb nagar": {
+      "lat": 17.349,
+      "lng": 78.552,
+      "label": "L.B. Nagar, Hyderabad"
+    },
+    "begumpet": {
+      "lat": 17.4435,
+      "lng": 78.4668,
+      "label": "Begumpet, Hyderabad"
+    },
+    "somajiguda": {
+      "lat": 17.4271,
+      "lng": 78.4601,
+      "label": "Somajiguda, Hyderabad"
+    },
+    "panjagutta": {
+      "lat": 17.4253,
+      "lng": 78.4484,
+      "label": "Panjagutta, Hyderabad"
+    }
+  }
+}

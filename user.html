@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MetroPark — Find Parking</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; min-height: 100vh; }
+
+    header {
+      background: #161b22; border-bottom: 1px solid #30363d;
+      padding: 16px 32px; display: flex; justify-content: space-between; align-items: center;
+    }
+    header h1 { font-size: 1.4rem; color: #f39c12; }
+    header p  { font-size: 0.8rem; color: #8b949e; }
+    .home-btn {
+      padding: 8px 18px; background: rgba(255,255,255,0.07); border: 1px solid #30363d;
+      color: #e0e0e0; border-radius: 8px; cursor: pointer; font-size: 0.85rem; text-decoration: none;
+    }
+    .home-btn:hover { border-color: #f39c12; color: #f39c12; }
+
+    .page { display: flex; height: calc(100vh - 65px); }
+
+    /* ── Sidebar ────────────────────────────────────────────────────────── */
+    .sidebar {
+      width: 390px; background: #161b22; border-right: 1px solid #30363d;
+      overflow-y: auto; display: flex; flex-direction: column; flex-shrink: 0;
+    }
+    .sidebar-section { padding: 18px 20px; border-bottom: 1px solid #21262d; }
+    .sidebar-section h3 {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px;
+      color: #8b949e; margin-bottom: 12px;
+    }
+
+    /* ── Destination Search Box ─────────────────────────────────────────── */
+    .dest-search-wrap { position: relative; }
+    .dest-input-row { display: flex; gap: 8px; }
+    .dest-input {
+      flex: 1; padding: 10px 14px; background: #0d1117;
+      border: 1px solid #30363d; border-radius: 8px; color: #e0e0e0; font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+    .dest-input:focus { outline: none; border-color: #7c3aed; }
+    .dest-btn {
+      padding: 10px 16px; background: #7c3aed; border: none;
+      border-radius: 8px; color: white; font-weight: 700; font-size: 0.85rem;
+      cursor: pointer; white-space: nowrap; transition: background 0.2s;
+    }
+    .dest-btn:hover { background: #6d28d9; }
+    .dest-hint { font-size: 0.73rem; color: #6b7280; margin-top: 6px; }
+
+    /* Autocomplete dropdown */
+    .autocomplete-list {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: #1e2130; border: 1px solid #30363d; border-radius: 8px;
+      max-height: 200px; overflow-y: auto; z-index: 200; display: none;
+    }
+    .autocomplete-list.open { display: block; }
+    .autocomplete-item {
+      padding: 9px 14px; cursor: pointer; font-size: 0.85rem; color: #e0e0e0;
+      border-bottom: 1px solid #21262d; transition: background 0.15s;
+    }
+    .autocomplete-item:last-child { border-bottom: none; }
+    .autocomplete-item:hover, .autocomplete-item.active { background: rgba(124,58,237,0.2); color: #c4b5fd; }
+
+    /* Destination result banner */
+    .dest-banner {
+      background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 8px; padding: 10px 14px; margin-top: 10px;
+      font-size: 0.82rem; display: none;
+    }
+    .dest-banner .dest-name { color: #c4b5fd; font-weight: 700; font-size: 0.88rem; }
+    .dest-banner .dest-sub  { color: #8b949e; margin-top: 2px; }
+    .dest-banner.show { display: block; }
+
+    /* GPS button */
+    .gps-btn {
+      width: 100%; padding: 10px; background: rgba(52,152,219,0.15);
+      border: 1px solid rgba(52,152,219,0.3); color: #3498db;
+      border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.88rem;
+    }
+    .gps-btn:hover { background: rgba(52,152,219,0.25); }
+
+    /* ── Area Cards ─────────────────────────────────────────────────────── */
+    .zone-label {
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #6b7280; font-weight: 700; margin: 14px 0 6px;
+      padding-bottom: 4px; border-bottom: 1px solid #21262d;
+    }
+    .area-card {
+      background: #0d1117; border: 1px solid #21262d; border-radius: 10px;
+      padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s;
+    }
+    .area-card:hover, .area-card.selected { border-color: #f39c12; background: rgba(243,156,18,0.05); }
+    .area-card-top { display: flex; justify-content: space-between; align-items: center; }
+    .area-name  { font-weight: 600; font-size: 0.88rem; }
+    .area-avail { font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+    .avail-ok   { background: rgba(46,204,113,0.15); color: #2ecc71; }
+    .avail-low  { background: rgba(243,156,18,0.15); color: #f39c12; }
+    .avail-full { background: rgba(231,76,60,0.15);  color: #e74c3c; }
+    .area-addr  { font-size: 0.75rem; color: #8b949e; margin-top: 4px; }
+    .area-dist  { font-size: 0.72rem; color: #7c3aed; margin-top: 3px; font-weight: 600; }
+    .area-dist.gps-dist { color: #3498db; }
+    .occ-bar    { height: 3px; background: #30363d; border-radius: 2px; margin-top: 8px; overflow: hidden; }
+    .occ-fill   { height: 100%; border-radius: 2px; transition: width 0.4s; }
+
+    /* ── Slot Grid ──────────────────────────────────────────────────────── */
+    .slot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; }
+    .slot {
+      aspect-ratio: 1; border-radius: 8px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; cursor: pointer; font-weight: 700;
+      font-size: 0.7rem; border: 2px solid transparent; transition: all 0.2s;
+    }
+    .slot.free     { background: rgba(46,204,113,0.12); border-color: rgba(46,204,113,0.3); color: #2ecc71; }
+    .slot.free:hover { background: rgba(46,204,113,0.25); border-color: #2ecc71; transform: scale(1.05); }
+    .slot.occupied { background: rgba(231,76,60,0.1);  border-color: rgba(231,76,60,0.2);  color: #e74c3c; cursor: not-allowed; }
+    .slot.selected { background: rgba(243,156,18,0.2); border-color: #f39c12; color: #f39c12; }
+    .slot-icon { font-size: 1rem; }
+
+    .legend { display: flex; gap: 12px; font-size: 0.73rem; color: #8b949e; }
+    .legend-dot { width: 9px; height: 9px; border-radius: 2px; display: inline-block; margin-right: 3px; }
+
+    /* ── Main Panel ─────────────────────────────────────────────────────── */
+    .main { flex: 1; overflow-y: auto; padding: 28px; }
+    .main-placeholder { display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; gap: 12px; color: #8b949e; }
+    .main-placeholder .big-icon { font-size: 5rem; }
+
+    .booking-panel {
+      background: #161b22; border: 1px solid #30363d; border-radius: 14px;
+      padding: 28px; max-width: 520px;
+    }
+    .booking-panel h2 { font-size: 1.2rem; margin-bottom: 6px; }
+    .subtitle { font-size: 0.85rem; color: #8b949e; margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 0.8rem; color: #8b949e; margin-bottom: 6px; font-weight: 600; }
+    input[type=text], input[type=tel] {
+      width: 100%; padding: 11px 14px; background: #0d1117;
+      border: 1px solid #30363d; border-radius: 8px; color: #e0e0e0; font-size: 0.9rem;
+    }
+    input:focus { outline: none; border-color: #f39c12; }
+    .slot-preview {
+      background: rgba(243,156,18,0.1); border: 1px solid rgba(243,156,18,0.3);
+      border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.85rem; color: #f39c12;
+    }
+    .book-btn {
+      width: 100%; padding: 13px; background: #f39c12; color: #000;
+      border: none; border-radius: 8px; font-weight: 700; font-size: 1rem;
+      cursor: pointer; margin-top: 8px;
+    }
+    .book-btn:hover { background: #e67e22; }
+
+    .release-panel {
+      background: #161b22; border: 1px solid #30363d; border-radius: 14px;
+      padding: 28px; max-width: 520px; margin-top: 20px;
+    }
+    .release-panel h2 { font-size: 1.1rem; margin-bottom: 6px; }
+    .release-btn-red {
+      width: 100%; padding: 12px; background: rgba(231,76,60,0.15);
+      border: 1px solid rgba(231,76,60,0.4); color: #e74c3c;
+      border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 8px;
+    }
+    .release-btn-red:hover { background: rgba(231,76,60,0.25); }
+
+    .alert { padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.88rem; font-weight: 600; display: none; }
+    .alert-success { background: rgba(46,204,113,0.15); border: 1px solid rgba(46,204,113,0.4); color: #2ecc71; }
+    .alert-error   { background: rgba(231,76,60,0.15);  border: 1px solid rgba(231,76,60,0.4);  color: #e74c3c; }
+
+    .confirmation-card {
+      background: rgba(46,204,113,0.07); border: 1px solid rgba(46,204,113,0.3);
+      border-radius: 12px; padding: 22px; margin-top: 16px;
+    }
+    .confirmation-card h3 { color: #2ecc71; margin-bottom: 14px; font-size: 1.1rem; }
+    .conf-id  { font-size: 1.1rem; color: #f39c12; font-weight: 700; margin-bottom: 12px; }
+    .conf-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.88rem; }
+    .conf-row:last-of-type { border: none; }
+    .conf-key { color: #8b949e; }
+    .conf-val { font-weight: 600; }
+
+    .nav-cta-wrap { margin-top: 18px; }
+    .nav-cta-label { font-size: 0.78rem; color: #8b949e; margin-bottom: 8px; text-align: center; }
+    .nav-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #1a73e8, #0d62d0);
+      color: #fff; border: none; border-radius: 10px;
+      font-weight: 700; font-size: 1rem; cursor: pointer; text-decoration: none;
+      transition: all 0.2s; box-shadow: 0 4px 16px rgba(26,115,232,0.4);
+    }
+    .nav-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .nav-btn-icon { font-size: 1.3rem; }
+    .book-another-btn {
+      width: 100%; padding: 11px; margin-top: 10px;
+      background: transparent; border: 1px solid #30363d;
+      color: #8b949e; border-radius: 8px; cursor: pointer; font-size: 0.88rem;
+    }
+    .book-another-btn:hover { border-color: #f39c12; color: #f39c12; }
+
+    /* sort-label strip */
+    .sort-strip {
+      font-size: 0.75rem; color: #7c3aed; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .sort-strip.gps { color: #3498db; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🚗 MetroPark</h1>
+    <p>Find &amp; Book Parking in Hyderabad</p>
+  </div>
+  <a href="/" class="home-btn">⬅ Home</a>
+</header>
+
+<div class="page">
+  <!-- ── Sidebar ─────────────────────────────────────────────────────────── -->
+  <div class="sidebar">
+
+    <!-- Destination Search -->
+    <div class="sidebar-section">
+      <h3>🎯 Search by Destination</h3>
+      <div class="dest-search-wrap">
+        <div class="dest-input-row">
+          <input class="dest-input" id="destInput" type="text"
+            placeholder="e.g. Paradise Circle, DLF, Film Nagar…"
+            autocomplete="off"
+            oninput="onDestInput(this.value)"
+            onkeydown="onDestKeydown(event)"/>
+          <button class="dest-btn" onclick="searchDestination()">🔍 Find</button>
+        </div>
+        <div class="dest-hint">Type any landmark, mall, area or locality</div>
+        <div class="autocomplete-list" id="acList"></div>
+        <div class="dest-banner" id="destBanner">
+          <div class="dest-name" id="destBannerName"></div>
+          <div class="dest-sub" id="destBannerSub"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GPS -->
+    <div class="sidebar-section">
+      <h3>📡 Use My GPS Location</h3>
+      <button class="gps-btn" onclick="useGPS()">📡 Find Nearest to Me</button>
+    </div>
+
+    <!-- Area List -->
+    <div class="sidebar-section" style="flex:1">
+      <h3>🏙️ All Parking Areas</h3>
+      <div id="areaList"><div style="color:#8b949e;font-size:0.85rem;">Loading areas…</div></div>
+    </div>
+
+    <!-- Slot Grid -->
+    <div class="sidebar-section" id="slotSection" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <h3 style="margin:0;font-size:0.75rem;" id="slotAreaName">Slots</h3>
+        <div class="legend">
+          <span><span class="legend-dot" style="background:#2ecc71"></span>Free</span>
+          <span><span class="legend-dot" style="background:#e74c3c"></span>Taken</span>
+        </div>
+      </div>
+      <div class="slot-grid" id="slotGrid"></div>
+    </div>
+  </div>
+
+  <!-- ── Main Content ────────────────────────────────────────────────────── -->
+  <div class="main" id="mainContent">
+    <div class="main-placeholder">
+      <div class="big-icon">🅿️</div>
+      <h2>Select a parking area</h2>
+      <p>Search your destination above, use GPS, or pick an area from the list</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  let selectedArea = null;
+  let selectedSlot = null;
+  let areaCoords   = {};      // { areaName: { lat, lng } }
+  let allSuggestions = [];    // autocomplete data
+  let acIndex = -1;           // keyboard nav index
+
+  // ── Autocomplete ────────────────────────────────────────────────────────────
+
+  async function loadSuggestions() {
+    try {
+      const res = await fetch('/api/destinations/suggestions');
+      allSuggestions = await res.json();
+    } catch(e) { allSuggestions = []; }
+  }
+
+  function onDestInput(val) {
+    acIndex = -1;
+    const q = val.trim().toLowerCase();
+    if (!q) { closeAC(); return; }
+    const matches = allSuggestions.filter(s => s.includes(q)).slice(0, 10);
+    const list = document.getElementById('acList');
+    if (!matches.length) { closeAC(); return; }
+    list.innerHTML = matches.map((m, i) =>
+      `<div class="autocomplete-item" data-idx="${i}" onmousedown="pickAC('${m.replace(/'/g,"\\'")}')">
+         📍 ${m.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'), match => `<strong>${match}</strong>`)}
+       </div>`).join('');
+    list.classList.add('open');
+  }
+
+  function onDestKeydown(e) {
+    const list = document.getElementById('acList');
+    const items = list.querySelectorAll('.autocomplete-item');
+    if (!list.classList.contains('open')) {
+      if (e.key === 'Enter') { searchDestination(); return; }
+      return;
+    }
+    if (e.key === 'ArrowDown') {
+      acIndex = Math.min(acIndex + 1, items.length - 1);
+      items.forEach((el, i) => el.classList.toggle('active', i === acIndex));
+      e.preventDefault();
+    } else if (e.key === 'ArrowUp') {
+      acIndex = Math.max(acIndex - 1, -1);
+      items.forEach((el, i) => el.classList.toggle('active', i === acIndex));
+      e.preventDefault();
+    } else if (e.key === 'Enter') {
+      if (acIndex >= 0 && items[acIndex]) {
+        const txt = items[acIndex].textContent.replace('📍 ','').trim();
+        pickAC(txt);
+      } else {
+        searchDestination();
+      }
+      e.preventDefault();
+    } else if (e.key === 'Escape') {
+      closeAC();
+    }
+  }
+
+  function pickAC(val) {
+    document.getElementById('destInput').value = val;
+    closeAC();
+    searchDestination();
+  }
+
+  function closeAC() {
+    document.getElementById('acList').classList.remove('open');
+  }
+
+  // ── Destination Search ───────────────────────────────────────────────────────
+
+  async function searchDestination() {
+    closeAC();
+    const query = document.getElementById('destInput').value.trim();
+    if (!query) return;
+
+    const res  = await fetch('/api/search_destination', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ destination: query })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      const banner = document.getElementById('destBanner');
+      banner.classList.add('show');
+      document.getElementById('destBannerName').textContent = '⚠️ Location not found';
+      document.getElementById('destBannerSub').textContent  =
+        err.message || `Try: paradise circle, dlf, film nagar, inorbit…`;
+      renderAreaList([], null, 'dest');
+      return;
+    }
+
+    const data = await res.json();
+    const banner = document.getElementById('destBanner');
+    banner.classList.add('show');
+    document.getElementById('destBannerName').textContent = '📍 ' + data.destination_label;
+    document.getElementById('destBannerSub').textContent  =
+      `Showing ${data.results.length} parking areas sorted by distance`;
+
+    renderAreaList(data.results, data.destination_label, 'dest');
+  }
+
+  // ── GPS ─────────────────────────────────────────────────────────────────────
+
+  async function useGPS() {
+    if (!navigator.geolocation) { alert('Geolocation not supported.'); return; }
+    navigator.geolocation.getCurrentPosition(async pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      const res     = await fetch('/api/nearest', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ lat, lng })
+      });
+      const results = await res.json();
+      // clear dest banner
+      document.getElementById('destBanner').classList.remove('show');
+      document.getElementById('destInput').value = '';
+      renderAreaList(results, null, 'gps');
+    }, () => alert('Could not get your location. Please allow location access.'));
+  }
+
+  // ── Render area list ─────────────────────────────────────────────────────────
+
+  async function loadAreas() {
+    const res   = await fetch('/api/areas');
+    const areas = await res.json();
+    areaCoords  = {};
+    areas.forEach(a => { areaCoords[a.name] = { lat: a.lat, lng: a.lng }; });
+    renderAreaList(areas, null, 'all');
+  }
+
+  function renderAreaList(areas, sortLabel, mode) {
+    // Update areaCoords cache
+    areas.forEach(a => {
+      if (a.lat) areaCoords[a.name] = { lat: a.lat, lng: a.lng };
+    });
+
+    const list = document.getElementById('areaList');
+    list.innerHTML = '';
+
+    // Sort-strip header
+    if (mode === 'dest' && sortLabel) {
+      list.innerHTML = `<div class="sort-strip">🎯 Sorted by distance from <em>${sortLabel}</em></div>`;
+    } else if (mode === 'gps') {
+      list.innerHTML = `<div class="sort-strip gps">📡 Sorted by distance from your location</div>`;
+    }
+
+    if (!areas.length) {
+      list.innerHTML += '<div style="color:#8b949e;font-size:0.85rem;padding:8px 0;">No parking areas found.</div>';
+      return;
+    }
+
+    if (mode === 'all') {
+      // Group by zone
+      const zones = {};
+      areas.forEach(a => {
+        const zone = a.zone || a.name;
+        if (!zones[zone]) zones[zone] = [];
+        zones[zone].push(a);
+      });
+      Object.entries(zones).forEach(([zone, items]) => {
+        list.innerHTML += `<div class="zone-label">📌 ${zone}</div>`;
+        items.forEach(a => list.innerHTML += areaCardHTML(a, mode));
+      });
+    } else {
+      // Flat sorted list (dest or gps mode)
+      areas.forEach((a, i) => {
+        list.innerHTML += areaCardHTML(a, mode, i);
+      });
+    }
+  }
+
+  function areaCardHTML(a, mode, rank) {
+    const pct        = a.total > 0 ? (a.occupied / a.total * 100).toFixed(0) : 0;
+    const available  = a.available !== undefined ? a.available : (a.total - a.occupied);
+    const availClass = available === 0 ? 'avail-full' : available <= 3 ? 'avail-low' : 'avail-ok';
+    const barColor   = available === 0 ? '#e74c3c' : available <= 3 ? '#f39c12' : '#2ecc71';
+    const id         = a.id || a.name.replace(/\s+/g, '_').toLowerCase();
+    const distHTML   = a.distance_km !== undefined
+      ? `<div class="area-dist ${mode === 'gps' ? 'gps-dist' : ''}">${mode === 'dest' ? '🎯' : '📍'} ${a.distance_km} km away${rank === 0 ? ' — <strong>Closest!</strong>' : ''}</div>`
+      : '';
+    return `
+      <div class="area-card" id="areaCard-${id}" onclick="selectArea('${a.name.replace(/'/g,"\\'")}','${id}')">
+        <div class="area-card-top">
+          <span class="area-name">${a.name}</span>
+          <span class="area-avail ${availClass}">${available}/${a.total} free</span>
+        </div>
+        ${distHTML}
+        <div class="area-addr">${a.address}</div>
+        <div class="occ-bar"><div class="occ-fill" style="width:${pct}%;background:${barColor}"></div></div>
+      </div>`;
+  }
+
+  // ── Select Area ──────────────────────────────────────────────────────────────
+
+  async function selectArea(areaName, areaId) {
+    selectedArea = areaName;
+    selectedSlot = null;
+    document.querySelectorAll('.area-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('areaCard-' + areaId)?.classList.add('selected');
+
+    const res  = await fetch('/api/slots/' + encodeURIComponent(areaName));
+    const data = await res.json();
+    document.getElementById('slotAreaName').textContent = areaName;
+    document.getElementById('slotSection').style.display = 'block';
+    renderSlotGrid(data.slots);
+    showBookingPanel();
+  }
+
+  function renderSlotGrid(slots) {
+    const grid = document.getElementById('slotGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    slots.forEach(s => {
+      const cls  = s.occupied ? 'occupied' : 'free';
+      const icon = s.occupied ? '🔴' : '🟢';
+      grid.innerHTML += `
+        <div class="slot ${cls}" id="slot-${s.id}" onclick="selectSlot('${s.id}',${s.occupied})"
+             title="${s.occupied ? 'Taken' : 'Available'}">
+          <span class="slot-icon">${icon}</span>${s.id}
+        </div>`;
+    });
+  }
+
+  function selectSlot(slotId, occupied) {
+    if (occupied) return;
+    selectedSlot = slotId;
+    document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+    document.getElementById('slot-' + slotId)?.classList.add('selected');
+    const prev = document.getElementById('slotPreview');
+    if (prev) { prev.textContent = `📍 ${selectedArea}  ·  🅿️ Slot ${slotId}`; prev.style.display = 'block'; }
+  }
+
+  // ── Booking Panel ────────────────────────────────────────────────────────────
+
+  function showBookingPanel() {
+    document.getElementById('mainContent').innerHTML = `
+      <div class="booking-panel">
+        <h2>Book a Slot — ${selectedArea}</h2>
+        <p class="subtitle">Select a green slot on the left, then fill in your details.</p>
+        <div class="alert alert-success" id="bookSuccess"></div>
+        <div class="alert alert-error"   id="bookError"></div>
+        <div id="bookForm">
+          <div class="slot-preview" id="slotPreview" style="display:none;"></div>
+          <div class="form-group"><label>Full Name</label>
+            <input type="text" id="driverName" placeholder="e.g. Ravi Kumar"/></div>
+          <div class="form-group"><label>Vehicle Number</label>
+            <input type="text" id="vehicleNum" placeholder="e.g. TS09AB1234"/></div>
+          <div class="form-group"><label>Phone (optional)</label>
+            <input type="tel" id="phoneNum" placeholder="e.g. 9876543210"/></div>
+          <button class="book-btn" onclick="bookSlot()">🅿️ Confirm Booking</button>
+        </div>
+        <div id="confirmCard"></div>
+      </div>
+
+      <div class="release-panel">
+        <h2>🔓 Release Your Slot</h2>
+        <p class="subtitle" style="margin-bottom:16px;">Already parked? Enter your details to free up your slot.</p>
+        <div class="alert alert-success" id="relSuccess"></div>
+        <div class="alert alert-error"   id="relError"></div>
+        <div class="form-group"><label>Slot Number</label>
+          <input type="text" id="relSlot" placeholder="e.g. SP03"/></div>
+        <div class="form-group"><label>Vehicle Number</label>
+          <input type="text" id="relVehicle" placeholder="e.g. TS09AB1234"/></div>
+        <button class="release-btn-red" onclick="releaseSlot()">Release My Slot</button>
+      </div>`;
+  }
+
+  async function bookSlot() {
+    if (!selectedSlot) { showAlert('bookError','⚠️ Please select a slot from the grid first.'); return; }
+    const name    = document.getElementById('driverName').value.trim();
+    const vehicle = document.getElementById('vehicleNum').value.trim();
+    const phone   = document.getElementById('phoneNum').value.trim();
+    if (!name)    { showAlert('bookError','⚠️ Please enter your name.');           return; }
+    if (!vehicle) { showAlert('bookError','⚠️ Please enter your vehicle number.'); return; }
+
+    const res  = await fetch('/api/book', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ name, vehicle_number: vehicle, area: selectedArea, slot: selectedSlot, phone })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      const b        = data.booking;
+      const coords   = areaCoords[b.area] || {};
+      const mapsUrl  = coords.lat
+        ? `https://www.google.com/maps/dir/?api=1&destination=${coords.lat},${coords.lng}&travelmode=driving`
+        : `https://www.google.com/maps/search/${encodeURIComponent(b.area + ' parking Hyderabad')}`;
+
+      document.getElementById('bookForm').style.display = 'none';
+      document.getElementById('confirmCard').innerHTML = `
+        <div class="confirmation-card">
+          <h3>✅ Booking Confirmed!</h3>
+          <div class="conf-id">${b.booking_id}</div>
+          <div class="conf-row"><span class="conf-key">Driver</span>    <span class="conf-val">${b.name}</span></div>
+          <div class="conf-row"><span class="conf-key">Vehicle</span>   <span class="conf-val">${b.vehicle_number}</span></div>
+          <div class="conf-row"><span class="conf-key">Area</span>      <span class="conf-val">${b.area}</span></div>
+          <div class="conf-row"><span class="conf-key">Slot</span>      <span class="conf-val">${b.slot}</span></div>
+          <div class="conf-row"><span class="conf-key">Booked At</span> <span class="conf-val">${b.time}</span></div>
+          <div class="nav-cta-wrap">
+            <div class="nav-cta-label">Ready to drive? Tap below to get directions.</div>
+            <a class="nav-btn" href="${mapsUrl}" target="_blank" rel="noopener">
+              <span class="nav-btn-icon">🗺️</span> Navigate to ${b.area}
+            </a>
+            <button class="book-another-btn" onclick="resetBookingForm()">+ Book Another Slot</button>
+          </div>
+        </div>`;
+
+      await loadAreas();
+      const slotRes  = await fetch('/api/slots/' + encodeURIComponent(selectedArea));
+      const slotData = await slotRes.json();
+      renderSlotGrid(slotData.slots);
+    } else {
+      showAlert('bookError', '❌ ' + data.message);
+    }
+  }
+
+  function resetBookingForm() {
+    selectedSlot = null;
+    showBookingPanel();
+  }
+
+  async function releaseSlot() {
+    const slot    = document.getElementById('relSlot').value.trim().toUpperCase();
+    const vehicle = document.getElementById('relVehicle').value.trim();
+    if (!slot || !vehicle) { showAlert('relError','⚠️ Please fill in all fields.'); return; }
+
+    const res  = await fetch('/api/release', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ area: selectedArea, slot, vehicle_number: vehicle })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showAlert('relSuccess', `✅ Slot ${slot} released. Safe travels!`);
+      document.getElementById('relSlot').value    = '';
+      document.getElementById('relVehicle').value = '';
+      await loadAreas();
+      const slotRes  = await fetch('/api/slots/' + encodeURIComponent(selectedArea));
+      const slotData = await slotRes.json();
+      renderSlotGrid(slotData.slots);
+    } else {
+      showAlert('relError', '❌ ' + data.message);
+    }
+  }
+
+  function showAlert(id, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent   = msg;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 4500);
+  }
+
+  // Close autocomplete when clicking outside
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.dest-search-wrap')) closeAC();
+  });
+
+  // Init
+  loadSuggestions();
+  loadAreas();
+</script>
+</body>
+</html>

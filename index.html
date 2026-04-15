@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MetroPark — City Parking Portal</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .container {
+      text-align: center;
+      color: white;
+      padding: 40px 20px;
+    }
+    .logo { font-size: 60px; margin-bottom: 10px; }
+    h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: 2px; }
+    p { margin: 10px 0 50px; font-size: 1.1rem; opacity: 0.75; }
+    .cards {
+      display: flex; gap: 30px; justify-content: center;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 40px 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 260px;
+    }
+    .card:hover {
+      background: rgba(255,255,255,0.18);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .card-icon { font-size: 50px; margin-bottom: 16px; }
+    .card h2 { font-size: 1.4rem; margin-bottom: 8px; }
+    .card p { font-size: 0.9rem; margin: 0; opacity: 0.65; }
+    .btn {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 10px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-admin { background: #f39c12; color: #000; }
+    .btn-user  { background: #2ecc71; color: #000; }
+
+    /* Modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; z-index: 100;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #1e1e2e; border-radius: 16px;
+      padding: 36px; width: 360px; color: white;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .modal h3 { margin-bottom: 24px; font-size: 1.3rem; text-align: center; }
+    .modal input {
+      width: 100%; padding: 12px 16px; margin-bottom: 14px;
+      border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.07); color: white; font-size: 1rem;
+    }
+    .modal input::placeholder { color: rgba(255,255,255,0.4); }
+    .modal-btn {
+      width: 100%; padding: 12px; border-radius: 8px; border: none;
+      background: #f39c12; color: #000; font-weight: 700;
+      font-size: 1rem; cursor: pointer; margin-top: 6px;
+    }
+    .modal-btn:hover { background: #e67e22; }
+    .modal-close {
+      float: right; background: none; border: none;
+      color: rgba(255,255,255,0.5); font-size: 1.3rem; cursor: pointer;
+    }
+    .error-msg { color: #e74c3c; font-size: 0.85rem; margin-top: 8px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">🚗</div>
+    <h1>MetroPark</h1>
+    <p>Metropolitan City Parking Management System — Hyderabad</p>
+    <div class="cards">
+      <div class="card" onclick="window.location='/user/dashboard'">
+        <div class="card-icon">🅿️</div>
+        <h2>Find Parking</h2>
+        <p>Browse areas, check availability, and book your slot</p>
+        <button class="btn btn-user">Enter as User</button>
+      </div>
+      <div class="card" onclick="document.getElementById('adminModal').classList.add('active')">
+        <div class="card-icon">🔐</div>
+        <h2>Admin Portal</h2>
+        <p>Manage occupancy, view reports, and release slots</p>
+        <button class="btn btn-admin">Admin Login</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal">
+      <button class="modal-close" onclick="document.getElementById('adminModal').classList.remove('active')">✕</button>
+      <h3>🔐 Admin Login</h3>
+      <input type="text" id="adminUser" placeholder="Username" />
+      <input type="password" id="adminPass" placeholder="Password" />
+      <div class="error-msg" id="loginErr">Invalid credentials. Try again.</div>
+      <button class="modal-btn" onclick="adminLogin()">Login</button>
+    </div>
+  </div>
+
+  <script>
+    async function adminLogin() {
+      const username = document.getElementById('adminUser').value.trim();
+      const password = document.getElementById('adminPass').value.trim();
+      const err = document.getElementById('loginErr');
+      err.style.display = 'none';
+      const res = await fetch('/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (data.success) window.location = '/admin/dashboard';
+      else { err.style.display = 'block'; }
+    }
+    document.getElementById('adminPass').addEventListener('keydown', e => {
+      if (e.key === 'Enter') adminLogin();
+    });
+  </script>
+</body>
+</html>
